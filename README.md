@@ -13,7 +13,7 @@ O código-fonte está organizado nas seguintes pastas:
     *   **[`Fila/`](./Estrutura-Dados/Fila/)**: Implementações de filas estáticas e dinâmicas.
     *   **[`listaCircular/`](./Estrutura-Dados/listaCircular/)**: Implementações de listas circulares.
     *   **[`listaDinamicaEncadeada/`](./Estrutura-Dados/listaDinamicaEncadeada/)**: Implementações de listas encadeadas dinâmicas.
-    *   **[`listaDuplamenteEncadeada/`](./Estrutura-Dados/listaDuplamenteEncadeada/)**: Implementações de listas duplamente encadeadas.
+    *   **[`listaDuplamenteEncadeada/`](./Estrutura-Dados/ListaDuplamenteEncadeada/)**: Implementações de listas duplamente encadeadas.
     *   **[`ListaNoDescritor/`](./Estrutura-Dados/ListaNoDescritor/)**: Implementações de listas com nó descritor.
     *   **[`listaSequencial/`](./Estrutura-Dados/listaSequencial/)**: Implementações de listas sequenciais.
     *   **[`Pilha/`](./Estrutura-Dados/Pilha/)**: Implementações de pilhas (genéricas ou adicionais).
