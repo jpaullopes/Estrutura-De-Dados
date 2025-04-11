@@ -56,6 +56,9 @@ typedef struct arv{
 - **`ehArvBinaria(Arv arv)`**: Verifica se a árvore é uma árvore binária de busca válida.
 - **`ehIgual(Arv arv1, Arv arv2)`**: Verifica se duas árvores são idênticas em estrutura e valores.
 
+### 🔢 Avaliação de Expressões
+- **`valor(Arv arv)`**: Avalia uma expressão aritmética representada por uma árvore binária, onde nós internos são operadores (+, -, *, /) e folhas são operandos numéricos.
+
 ## 🔮 Aplicações Práticas
 
 - Indexação de dados

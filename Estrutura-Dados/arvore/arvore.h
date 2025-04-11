@@ -26,5 +26,6 @@ int tem(Arv arv, int item);
 int ehArvBinaria(Arv arv);
 int ehIgual(Arv arv1, Arv arv2);
 void exibeDecrescente(Arv arv);
+int valor(Arv arv);
 
-#endif 
+#endif

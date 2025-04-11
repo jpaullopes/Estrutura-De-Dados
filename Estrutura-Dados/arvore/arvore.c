@@ -30,15 +30,15 @@ void emOrdem(Arv arv){
 void preOrdem(Arv arv){
     if(arv == NULL) return; // Se a arvore for nula, não faz nada
     printf("%d",arv->Item);
-    emOrdem(arv->Esq);
-    emOrdem(arv->Dir);
+    preOrdem(arv->Esq);
+    preOrdem(arv->Dir);
 }
 
 
 void posOrdem(Arv arv){
     if(arv == NULL) return; // Se a arvore for nula, não faz nada
-    emOrdem(arv->Esq);
-    emOrdem(arv->Dir);
+    posOrdem(arv->Esq);
+    posOrdem(arv->Dir);
     printf("%d",arv->Item);
 }
 
@@ -70,7 +70,7 @@ int busca(Arv arv, int item){
 }
 
 int removerMaximo(Arv *arv){
-    if(*arv == NULL) abort(); // Se a arvore for nula, aborta o programa
+    if(*arv == NULL) return 0; // Se a arvore for nula, aborta o programa
     while((*arv)->Dir != NULL){ // Enquanto a arvore da direita não for nula, vai para a direita
         arv = &(*arv)->Dir;
     }
@@ -81,21 +81,31 @@ int removerMaximo(Arv *arv){
     return item; // Retorna o valor do item
 }
 
+//função causadora do problema de compilação aqui ó
 void remover(Arv *arv, int item){
     if(*arv == NULL) return; // Se a arvore for nula, não faz nada
+    
     if(item == (*arv)->Item){ 
         Arv novaArv = *arv;
-        if( novaArv->Esq == NULL) { // Se a arvore da esquerda for nula, atribui a arvore da direita para a arvore atual
+        
+        if(novaArv->Esq == NULL) { // Se a arvore da esquerda for nula, atribui a arvore da direita para a arvore atual
             *arv = novaArv->Dir;
-        }else if(novaArv->Dir == NULL){ // Se a arvore da direita for nula, atribui a arvore da esquerda para a arvore atual
-            *arv = novaArv->Esq;
-        }else{ // Se as duas arvores não forem nulas, atribui a arvore da direita para a arvore atual
-            novaArv->Item = removerMaximo(&novaArv->Esq); // Remove o maximo da arvore da esquerda e atribui o valor para a arvore atual
+            free(novaArv); // Libera a memoria da arvore removida
         }
-        if(novaArv != NULL) free(novaArv); // Libera a memoria da arvore temporaria
-    }else if(item <= (*arv)->Item){ // Se o item for menor que o item da arvore, remove na esquerda
+        else if(novaArv->Dir == NULL){ // Se a arvore da direita for nula, atribui a arvore da esquerda para a arvore atual
+            *arv = novaArv->Esq;
+            free(novaArv); // Libera a memoria da arvore removida
+        }
+        else{ // Se as duas arvores não forem nulas
+            // Remove o maximo da arvore da esquerda e atribui o valor para a arvore atual
+            (*arv)->Item = removerMaximo(&novaArv->Esq);
+            // Não fazemos free(novaArv) aqui porque ainda estamos usando o nó
+        }
+    }
+    else if(item < (*arv)->Item){ // Se o item for menor que o item da arvore, remove na esquerda
         remover(&(*arv)->Esq, item);
-    }else{ // Se o item for maior que o item da arvore, remove na direita
+    }
+    else{ // Se o item for maior que o item da arvore, remove na direita
         remover(&(*arv)->Dir, item);
     }
 }
@@ -144,4 +154,33 @@ void exibeDecrescente(Arv arv){
     exibeDecrescente(arv->Dir); // Exibe a arvore da direita
     printf("%d ",arv->Item); // Exibe o item da arvore
     exibeDecrescente(arv->Esq); // Exibe a arvore da esquerda
+}
+
+int valor(Arv arv){
+    if(arv == NULL) return 0; // Se a arvore for nula, retorna 0
+    if(arv->Esq == NULL && arv->Dir == NULL) return arv->Item; // Se a arvore da esquerda e da direita forem nulas, retorna o item da arvore
+
+    int valorEsq = valor(arv->Esq); // Armazena o valor da arvore da esquerda
+    int valorDir = valor(arv->Dir); // Armazena o valor da arvore da direita
+
+    switch (arv->Item)
+    {
+    case '+':
+        return valorEsq + valorDir; 
+        break;
+    case '-':
+        return valorEsq - valorDir; 
+        break;
+    case '*':
+        return valorEsq * valorDir; 
+        break;
+    case '/':
+        if(valorDir == 0) return 0; 
+        return valorEsq / valorDir; 
+        break;
+    default:
+        break;
+    }
+    return 0; // Retorna 0 se não for nenhum dos casos
+
 }
